@@ -17,12 +17,22 @@ package sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.client.web.reactive.function.client.OAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Joe Grandja
  */
 @SpringBootApplication
 public class OAuth2LoginApplication {
+
+	@Bean
+	WebClient webClient() {
+		return WebClient.builder()
+				.filter(new OAuth2AuthorizedClientExchangeFilterFunction())
+				.build();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(OAuth2LoginApplication.class, args);
